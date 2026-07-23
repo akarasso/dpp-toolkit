@@ -59,12 +59,14 @@ npm uninstall -g cirpass-claude-mcp   # only if you had installed the tarball gl
 
 ### 3. Install the plugin
 
+This repo is **private** — `marketplace add` clones it over git, so use the SSH URL (guaranteed to work with the SSH access from step 1):
+
 ```bash
-claude plugin marketplace add EmblemTech/dpp-toolkit
+claude plugin marketplace add git@github.com:EmblemTech/dpp-toolkit.git
 claude plugin install dpp-toolkit@dpp-toolkit
 ```
 
-(From a local clone before the repo is on GitHub: `claude plugin marketplace add /path/to/dpp-toolkit`.)
+(The `EmblemTech/dpp-toolkit` shorthand also works, but only on machines with GitHub HTTPS credentials configured — e.g. `gh auth login`. A local clone works too: `claude plugin marketplace add /path/to/dpp-toolkit`.)
 
 ### 4. First session
 
