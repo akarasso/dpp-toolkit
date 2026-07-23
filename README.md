@@ -66,6 +66,8 @@ claude plugin marketplace add git@github.com:EmblemTech/dpp-toolkit.git
 claude plugin install dpp-toolkit@dpp-toolkit
 ```
 
+This installs at **user scope**: the toolkit is available in every project and session on your machine — install once, done. (To pin it to one repo for its whole team instead, run the commands with `--scope project` inside that repo: the declaration lands in its committable `.claude/settings.json`.)
+
 (The `EmblemTech/dpp-toolkit` shorthand also works, but only on machines with GitHub HTTPS credentials configured — e.g. `gh auth login`. A local clone works too: `claude plugin marketplace add /path/to/dpp-toolkit`.)
 
 ### 4. First session
