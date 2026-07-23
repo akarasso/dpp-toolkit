@@ -70,14 +70,24 @@ This installs at **user scope**: the toolkit is available in every project and s
 
 (The `EmblemTech/dpp-toolkit` shorthand also works, but only on machines with GitHub HTTPS credentials configured — e.g. `gh auth login`. A local clone works too: `claude plugin marketplace add /path/to/dpp-toolkit`.)
 
-### 4. First session
+### 4. Pre-warm the servers (recommended)
 
-Start a new Claude Code session. The first launch resolves and builds both servers from git (~1 min, network required) — later sessions start from cache. The embedding model (~30 MB) downloads once, at your first semantic search.
+The first build from git takes ~1 min — longer than Claude Code's MCP startup timeout, so on a cold cache the servers can show up as **failed** in your first session. Build them once outside a session instead (each command boots the server, prints its ready line, then exits on its own):
 
-Verify: `/mcp` should show `cirpass` and `cordis` connected (via the plugin), and `/dpp-toolkit:veille` should answer.
+```bash
+npx -y git+ssh://git@github.com/EmblemTech/cirpass-claude-mcp.git </dev/null
+uvx --from git+ssh://git@github.com/EmblemTech/cordis-claude-mcp.git cordis-mcp </dev/null
+```
+
+The same pause happens once after every merged update — re-run these to skip it.
+
+### 5. First session
+
+Start a new Claude Code session in this project. Verify: `/mcp` should show `cirpass` and `cordis` connected (via the plugin), and `/dpp-toolkit:veille` should answer. The embedding model (~30 MB) downloads once, at your first semantic search.
 
 ### Troubleshooting
 
+- `cirpass` / `cordis` marked **failed** in `/mcp` right after install or an update → the git build exceeded the MCP startup timeout. Run the pre-warm commands (step 4), then start a new session.
 - `ssh -T git@github.com` fails → fix your GitHub SSH key first; the servers install from private repos.
 - `ssh -T git@github.com` greets you as the **wrong account** ("Repository not found" on clone) — typical with multi-account SSH setups using host aliases (`github-work`, `github-perso`…): everything here uses plain `github.com` URLs, so pin the right key for that host and bypass the agent:
 
