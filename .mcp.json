@@ -1,17 +1,12 @@
 {
   "mcpServers": {
     "cirpass": {
-      "command": "node",
-      "args": ["/home/alexandre/workspaces/trace/cirpass-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "github:EmblemTech/cirpass-claude-mcp"]
     },
     "cordis": {
-      "command": "uv",
-      "args": [
-        "--directory",
-        "/home/alexandre/workspaces/trace/cordis-claude-mcp",
-        "run",
-        "cordis-mcp"
-      ]
+      "command": "uvx",
+      "args": ["--from", "git+ssh://git@github.com/EmblemTech/cordis-claude-mcp", "cordis-mcp"]
     }
   }
 }

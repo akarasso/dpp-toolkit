@@ -24,11 +24,21 @@ dpp-toolkit/
 
 ## Prerequisites
 
-- `cirpass-claude-mcp` cloned as a sibling and built (`npm install && npm run build`)
-- `cordis-claude-mcp` cloned as a sibling and synced (`uv sync`)
-- `.mcp.json` uses absolute paths — adjust them if your checkouts live elsewhere.
+- **GitHub access** (SSH) to the two private repos above — the plugin launches both servers straight from git.
+- **Node 18+** (for `npx`, runs the cirpass server) and **[uv](https://docs.astral.sh/uv/)** (runs the cordis server).
+
+`.mcp.json` resolves the servers from git at session start: when a new version lands
+on `main` (e.g. a merged data-refresh PR), everyone picks it up automatically at
+their next session — no manual update. First launch after a change rebuilds
+(~1 min) and needs network; unchanged versions start from cache.
+
+**Hacking on a server locally?** Point the entry at your checkout instead, e.g.
+`"command": "node", "args": ["/path/to/cirpass-claude-mcp/dist/index.js"]`.
 
 ## Install
+
+From a local clone (until the repo is pushed to GitHub — then
+`claude plugin marketplace add EmblemTech/dpp-toolkit` works for the whole team):
 
 ```bash
 claude plugin marketplace add /home/alexandre/workspaces/trace/dpp-toolkit
