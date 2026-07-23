@@ -2,11 +2,11 @@
   "mcpServers": {
     "cirpass": {
       "command": "npx",
-      "args": ["-y", "github:EmblemTech/cirpass-claude-mcp"]
+      "args": ["-y", "git+ssh://git@github.com/EmblemTech/cirpass-claude-mcp.git"]
     },
     "cordis": {
       "command": "uvx",
-      "args": ["--from", "git+ssh://git@github.com/EmblemTech/cordis-claude-mcp", "cordis-mcp"]
+      "args": ["--from", "git+ssh://git@github.com/EmblemTech/cordis-claude-mcp.git", "cordis-mcp"]
     }
   }
 }

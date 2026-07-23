@@ -51,7 +51,19 @@ If you previously registered `cirpass` / `cordis` directly with `claude mcp add`
 
 - Ask any DPP question — the `dpp-research` skill loads when relevant and guides tool usage (AND/OR `match_mode`, `next_offset` paging, Zenodo via `fetch_live`, CORDIS cross-referencing).
 - Delegate big questions to the agent: *"Use the dpp-expert agent: état de l'art des démonstrateurs DPP textile, avec sources."*
-- Pre-wired commands: `/dpp-toolkit:brief <sujet>` (sourced research brief) and `/dpp-toolkit:veille [période]` (intelligence digest).
+- Pre-wired commands: `/dpp-toolkit:brief <sujet>` (sourced research brief), `/dpp-toolkit:veille [période]` (intelligence digest), `/dpp-toolkit:reset` (wipe this machine's caches for a clean re-install).
+
+## Per-machine caches (nothing is "built" locally)
+
+Data and the semantic index ship **inside** the cirpass package — users never crawl or embed anything. Three caches exist per machine, all populated automatically:
+
+| Cache | Where | Refreshes |
+|---|---|---|
+| cirpass server (built package) | `~/.npm/_npx` | automatically when a new commit lands on `main` |
+| cordis server (Python env) | uv cache | same, resolved from git |
+| embedding model (~30 MB) | `~/.cache/cirpass-mcp/models` | downloaded once per machine, never re-downloaded |
+
+`/dpp-toolkit:reset` wipes all three when something is corrupted; the next session rebuilds from scratch.
 
 ## Development
 
