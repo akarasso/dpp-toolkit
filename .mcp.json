@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "cirpass": {
+      "command": "node",
+      "args": ["/home/alexandre/workspaces/trace/cirpass-mcp/dist/index.js"]
+    },
+    "cordis": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/home/alexandre/workspaces/trace/cordis-claude-mcp",
+        "run",
+        "cordis-mcp"
+      ]
+    }
+  }
+}
