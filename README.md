@@ -9,7 +9,11 @@ dpp-toolkit/
 │   └── marketplace.json     # lets this repo act as its own (local) marketplace
 ├── .mcp.json                # declares the two MCP servers: cirpass + cordis
 ├── skills/dpp-research/     # the research workflow (search strategy, PDF paging, CORDIS cross-ref)
-└── agents/dpp-expert.md     # subagent for delegated multi-step DPP research
+├── agents/dpp-expert.md     # subagent for delegated multi-step DPP research
+├── commands/
+│   ├── brief.md             # /dpp-toolkit:brief <sujet> — sourced research brief (via dpp-expert)
+│   └── veille.md            # /dpp-toolkit:veille [période] — news/events/deliverables/open-calls digest
+└── scripts/validate.mjs     # pnpm validate — structure + frontmatter + .mcp.json path checks
 ```
 
 | Layer | Repo | Role |
@@ -37,6 +41,16 @@ If you previously registered `cirpass` / `cordis` directly with `claude mcp add`
 
 - Ask any DPP question — the `dpp-research` skill loads when relevant and guides tool usage (AND/OR `match_mode`, `next_offset` paging, Zenodo via `fetch_live`, CORDIS cross-referencing).
 - Delegate big questions to the agent: *"Use the dpp-expert agent: état de l'art des démonstrateurs DPP textile, avec sources."*
+- Pre-wired commands: `/dpp-toolkit:brief <sujet>` (sourced research brief) and `/dpp-toolkit:veille [période]` (intelligence digest).
+
+## Development
+
+Managed with [pnpm](https://pnpm.io) (`packageManager` pinned in package.json):
+
+```bash
+pnpm install    # no runtime deps — sets up the lockfile
+pnpm validate   # checks plugin structure, frontmatter, and .mcp.json paths
+```
 
 ## Roadmap
 

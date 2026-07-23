@@ -1,0 +1,11 @@
+{
+  "name": "dpp-toolkit",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Claude Code plugin composing the cirpass + cordis MCP servers with a DPP research skill, agent, and commands",
+  "type": "module",
+  "packageManager": "pnpm@10.25.0",
+  "scripts": {
+    "validate": "node scripts/validate.mjs"
+  }
+}

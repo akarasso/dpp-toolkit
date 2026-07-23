@@ -1,7 +1,7 @@
 {
   "name": "dpp-toolkit",
   "description": "EU Digital Product Passport research toolkit: CIRPASS + CORDIS MCP servers, a research skill, and a dpp-expert agent",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Alexandre Karassouloff",
     "email": "a.karassouloff@gmail.com"
