@@ -20,11 +20,15 @@ Start a CIRPASS session with `get_data_status` if freshness matters — the snap
 
 ## Searching CIRPASS content
 
-- Use `search` with **precise English keywords** (the corpus is English; French queries only work via the OR fallback and match poorly).
-- Check `match_mode` in the response: `"all"` = every term matched (strong results); `"any"` = the AND query failed and this is a partial OR match — treat results as weak, rephrase or drop rare terms.
-- Results carry a contextual `snippet` around the matched terms — often enough to judge relevance without fetching the document.
-- Narrow with `site` (`cirpass1` = 2022–2024 pilot, `cirpass2` = 2024–2027 deployment), `type` (e.g. `dlm_download`, `post`, `page`, `opendpp-catalogue`, `media-pdf`), or `taxonomy_slug`. Discover available filters with `list_taxonomies` / `list_taxonomy_terms`.
-- For deliverables specifically, prefer `list_deliverables` (it merges CIRPASS-1 `dlm_download` posts with CIRPASS-2's curated results pages + media PDFs).
+Three retrieval modes — pick by query shape:
+
+- **`search` (keyword, default)** — exact terms, names, acronyms (ESPR, JTC 24, GS1…). Check `match_mode`: `"all"` = every term matched; `"any"` = AND failed, partial OR match — treat as weak, rephrase.
+- **`semantic_search`** — conceptual, paraphrased, or **non-English (French works)** queries. Returns best chunks with a `chunk_offset` you can pass directly as `get_document`'s `offset`.
+- **`search` with `mode: "hybrid"`** — both rankings fused (RRF); best recall when unsure or for thorough sweeps.
+
+Common to all: results carry contextual `snippet`s — judge relevance before fetching documents. Narrow with `site` (`cirpass1` = 2022–2024 pilot, `cirpass2` = 2024–2027 deployment), `type` (e.g. `dlm_download`, `zenodo-pdf`, `post`, `page`, `opendpp-catalogue`, `media-pdf`), or `taxonomy_slug` (discover via `list_taxonomies` / `list_taxonomy_terms`).
+
+For deliverables specifically, prefer `list_deliverables` — it merges CIRPASS-1 `dlm_download` posts, CIRPASS-2's curated results pages, media PDFs, **and bundled Zenodo deliverable texts** (entries with an `id` are fully readable via `get_document`).
 
 ## Reading long documents (deliverable PDFs)
 
@@ -41,6 +45,6 @@ Start a CIRPASS session with `get_data_status` if freshness matters — the snap
 ## Synthesis rules
 
 - Cite sources: document `id` + `url` for CIRPASS content, grant/RCN ids for CORDIS.
-- Date caveat: on CIRPASS events, `date` is the WordPress **publish** date, not the event date — the real date is in the text.
+- Event dates: `list_events` exposes `event_date` (extracted from the text, best-effort — null when extraction failed); `date` is the WordPress **publish** date. Filters/sorting already use `event_date` when available.
 - Keep CIRPASS-1 (completed pilot: methodology, roadmap, use cases for batteries/electronics/textiles) distinct from CIRPASS-2 (ongoing: demonstrators, CoP, EWGs, Open DPP Catalogue).
 - When the question touches regulation, anchor claims in EUR-Lex (via `droit-europeen` if available, else `fetch_live` on ec.europa.eu) rather than project material alone.
