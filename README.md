@@ -79,6 +79,17 @@ Verify: `/mcp` should show `cirpass` and `cordis` connected (via the plugin), an
 ### Troubleshooting
 
 - `ssh -T git@github.com` fails → fix your GitHub SSH key first; the servers install from private repos.
+- `ssh -T git@github.com` greets you as the **wrong account** ("Repository not found" on clone) — typical with multi-account SSH setups using host aliases (`github-work`, `github-perso`…): everything here uses plain `github.com` URLs, so pin the right key for that host and bypass the agent:
+
+  ```
+  Host github.com
+      HostName github.com
+      User git
+      IdentityFile ~/.ssh/<your-emblemtech-key>
+      IdentitiesOnly yes
+  ```
+
+  Your aliases keep working; only plain `github.com` URLs are affected.
 - A server won't start or behaves oddly → `/dpp-toolkit:reset` wipes this machine's caches, then restart the session.
 
 ## Use
