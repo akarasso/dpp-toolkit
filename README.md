@@ -26,7 +26,7 @@ dpp-toolkit/
 ## Prerequisites
 
 - **GitHub access** (SSH) to the two private repos above — the plugin launches both servers straight from git.
-- **Node 22+** (oldest supported LTS; runs the cirpass server via `npx`) and **[uv](https://docs.astral.sh/uv/)** (runs the cordis server).
+- **Node 24+** (active LTS; runs the cirpass server via `npx`) and **[uv](https://docs.astral.sh/uv/)** (runs the cordis server).
 
 `.mcp.json` resolves the servers from git at session start: when a new version lands
 on `main` (e.g. a merged data-refresh PR), everyone picks it up automatically at
@@ -42,7 +42,7 @@ their next session — no manual update. First launch after a change rebuilds
 
 ```bash
 ssh -T git@github.com     # must greet you — SSH access to the EmblemTech repos
-node --version            # >= 22 (oldest supported LTS)
+node --version            # >= 24 (active LTS)
 uv --version              # https://docs.astral.sh/uv/ if missing
 ```
 
