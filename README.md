@@ -12,7 +12,8 @@ dpp-toolkit/
 ├── agents/dpp-expert.md     # subagent for delegated multi-step DPP research
 ├── commands/
 │   ├── brief.md             # /dpp-toolkit:brief <sujet> — sourced research brief (via dpp-expert)
-│   └── veille.md            # /dpp-toolkit:veille [période] — news/events/deliverables/open-calls digest
+│   ├── veille.md            # /dpp-toolkit:veille [période] — news/events/deliverables/open-calls digest
+│   └── reset.md             # /dpp-toolkit:reset — wipe this machine's caches
 └── scripts/validate.mjs     # pnpm validate — structure + frontmatter + .mcp.json path checks
 ```
 
@@ -37,15 +38,44 @@ their next session — no manual update. First launch after a change rebuilds
 
 ## Install
 
-From a local clone (until the repo is pushed to GitHub — then
-`claude plugin marketplace add EmblemTech/dpp-toolkit` works for the whole team):
+### 1. Check the prerequisites
 
 ```bash
-claude plugin marketplace add /home/alexandre/workspaces/trace/dpp-toolkit
+ssh -T git@github.com     # must greet you — SSH access to the EmblemTech repos
+node --version            # >= 18
+uv --version              # https://docs.astral.sh/uv/ if missing
+```
+
+### 2. Remove any old standalone MCP registrations ⚠️
+
+If you ever registered these servers directly (`claude mcp add cirpass …` / `claude mcp add cordis …`, or a tarball install), remove them first — otherwise they run **alongside** the plugin's copies (duplicate tools, and yours would go stale while the plugin auto-updates):
+
+```bash
+claude mcp list                 # look for cirpass / cordis outside the plugin
+claude mcp remove cirpass       # repeat with -s user / -s project if listed in several scopes
+claude mcp remove cordis
+npm uninstall -g cirpass-claude-mcp   # only if you had installed the tarball globally
+```
+
+### 3. Install the plugin
+
+```bash
+claude plugin marketplace add EmblemTech/dpp-toolkit
 claude plugin install dpp-toolkit@dpp-toolkit
 ```
 
-If you previously registered `cirpass` / `cordis` directly with `claude mcp add`, remove those registrations (`claude mcp remove cirpass` etc.) so the plugin's copies are the only ones running.
+(From a local clone before the repo is on GitHub: `claude plugin marketplace add /path/to/dpp-toolkit`.)
+
+### 4. First session
+
+Start a new Claude Code session. The first launch resolves and builds both servers from git (~1 min, network required) — later sessions start from cache. The embedding model (~30 MB) downloads once, at your first semantic search.
+
+Verify: `/mcp` should show `cirpass` and `cordis` connected (via the plugin), and `/dpp-toolkit:veille` should answer.
+
+### Troubleshooting
+
+- `ssh -T git@github.com` fails → fix your GitHub SSH key first; the servers install from private repos.
+- A server won't start or behaves oddly → `/dpp-toolkit:reset` wipes this machine's caches, then restart the session.
 
 ## Use
 
